@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5TS9K7M4HJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-5TS9K7M4HJ');
+</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-XRV0JVTY6Q');
+</script>
+  <meta charset="UTF-8" />
+  <title>Agentic Multi-Layer Trading Architecture | NaviMod</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Theme Variables */
+      --bg-main: #0a1628;
+      --bg-card: #0f1f35;
+      --bg-card-hover: #142942;
+      --accent: #00d4ff;
+      --accent-secondary: #00ffc8;
+      --accent-soft: rgba(0, 212, 255, 0.08);
+      --accent-glow: rgba(0, 212, 255, 0.35);
+      --text-main: #ffffff;
+      --text-secondary: #e0e7f1;
+      --text-muted: #8ba3c7;
+      --border-soft: #1e3a5f;
+      --border-bright: #2d5a8f;
+      --gradient-1: linear-gradient(135deg, #0a1628 0%, #1a2f4a 100%);
+      --gradient-2: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 255, 200, 0.05) 100%);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background: radial-gradient(ellipse at top, #0f2847 0%, #0a1628 45%, #020814 100%);
+      color: var(--text-main);
+      line-height: 1.65;
+    }
+
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: var(--accent-secondary); }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 24px 100px;
+    }
+
+    /* HEADER STYLES */
+    header {
+      text-align: center;
+      margin-bottom: 60px;
+      position: relative;
+    }
+
+    /* Logo Image Style */
+    .hero-logo {
+      width: 130px; /* Logo Size */
+      height: auto;
+      display: block;
+      margin: 0 auto 32px; /* Center and space bottom */
+      filter: drop-shadow(0 0 25px rgba(0, 212, 255, 0.25)); /* Neon Glow */
+      animation: fadeDown 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .logo-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 20px;
+      border-radius: 999px;
+      background: var(--gradient-2);
+      border: 1px solid var(--border-bright);
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      backdrop-filter: blur(10px);
+    }
+
+    .logo-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent-glow), 0 0 24px var(--accent-glow);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    h1 {
+      margin-top: 24px;
+      font-size: clamp(36px, 5vw, 52px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      margin-top: 16px;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      letter-spacing: -0.01em;
+    }
+
+    .hero-meta {
+      margin-top: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+
+    /* NAVIGATION */
+    nav {
+      margin: 40px auto 60px;
+      max-width: 900px;
+      background: rgba(15, 31, 53, 0.85);
+      border-radius: 999px;
+      border: 1px solid var(--border-bright);
+      padding: 10px 16px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+      position: sticky;
+      top: 20px;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    nav a {
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 999px;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+    }
+
+    nav a:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    nav a.active {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+      color: var(--bg-main);
+      box-shadow: 0 0 16px var(--accent-glow);
+      font-weight: 700;
+    }
+
+    /* SECTIONS */
+    section {
+      margin-bottom: 80px;
+      scroll-margin-top: 100px;
+    }
+
+    .section-kicker {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      margin-bottom: 8px;
+      opacity: 0.9;
+    }
+
+    section h2 {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      color: var(--text-main);
+    }
+
+    section h2 span {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    p {
+      margin-bottom: 12px;
+      color: var(--text-secondary);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .muted { color: var(--text-muted); font-size: 15px; }
+
+    /* Flow Strip */
+    .flow-strip {
+      margin: 32px 0 40px;
+      padding: 20px 24px;
+      border-radius: 16px;
+      border: 1px solid var(--border-bright);
+      background: var(--gradient-2);
+      backdrop-filter: blur(10px);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+    .flow-strip span { text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; color: var(--text-main); }
+    .flow-arrow { opacity: 0.6; font-size: 20px; margin: 0 6px; color: var(--accent); }
+
+    /* Grid */
+    .grid { display: grid; gap: 20px; }
+    @media (min-width: 860px) {
+      .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    /* Cards */
+    .card {
+      background: var(--gradient-1);
+      border-radius: 20px;
+      border: 1px solid var(--border-soft);
+      padding: 24px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--accent-secondary) 100%);
+      opacity: 0; transition: opacity 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+      border-color: var(--border-bright);
+      background: var(--bg-card-hover);
+    }
+    .card:hover::before { opacity: 1; }
+
+    .card-tag {
+      display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.15em; color: var(--accent); background: var(--accent-soft);
+      padding: 4px 12px; border-radius: 999px; margin-bottom: 12px;
+    }
+
+    .card h3 {
+      font-size: 18px; font-weight: 700; margin-bottom: 12px; color: var(--text-main);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .card h3::before {
+      content: ''; width: 24px; height: 24px; flex-shrink: 0; border-radius: 8px;
+      background: var(--accent-soft); border: 1px solid var(--border-bright);
+      display: flex; align-items: center; justify-content: center; font-size: 14px;
+    }
+    .card.c1 h3::before { content: '⚡'; background: linear-gradient(135deg, rgba(0,212,255,0.2), rgba(0,255,200,0.1)); }
+    .card.c2 h3::before { content: '🏭'; background: linear-gradient(135deg, rgba(100,200,255,0.2), rgba(0,212,255,0.1)); }
+    .card.c3 h3::before { content: '🎯'; background: linear-gradient(135deg, rgba(0,255,200,0.2), rgba(0,212,255,0.1)); }
+    .card.c4 h3::before { content: '🛡️'; background: linear-gradient(135deg, rgba(255,200,100,0.2), rgba(255,150,0,0.1)); }
+    .card.c5 h3::before { content: '⚖️'; background: linear-gradient(135deg, rgba(200,100,255,0.2), rgba(150,0,255,0.1)); }
+    .card.c6 h3::before { content: '⚙️'; background: linear-gradient(135deg, rgba(100,255,200,0.2), rgba(0,255,150,0.1)); }
+
+    /* Lists */
+    ul { list-style: none; padding: 0; margin-top: 16px; }
+    li { padding-left: 28px; margin-bottom: 10px; position: relative; color: var(--text-secondary); font-size: 15px; }
+    li::before { content: '→'; position: absolute; left: 8px; color: var(--accent); font-weight: 700; }
+    li strong { color: var(--text-main); font-weight: 600; }
+
+    /* Pill List */
+    .pill-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .pill {
+      display: inline-block; padding: 6px 14px; background: var(--accent-soft);
+      border: 1px solid var(--border-soft); border-radius: 999px;
+      font-size: 12px; font-weight: 600; color: var(--accent);
+    }
+
+    /* Tables */
+    table {
+      width: 100%; border-collapse: separate; border-spacing: 0; margin: 24px 0;
+      background: var(--gradient-1); border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--border-soft); box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+    thead { background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(0,255,200,0.08)); }
+    th {
+      text-align: left; padding: 18px 20px; font-weight: 700; font-size: 14px;
+      text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-main);
+      border-bottom: 2px solid var(--border-bright);
+    }
+    td { padding: 18px 20px; border-bottom: 1px solid var(--border-soft); color: var(--text-secondary); font-size: 15px; }
+    tbody tr:hover { background: rgba(0, 212, 255, 0.05); }
+    tbody tr:last-child td { border-bottom: none; }
+    td strong { color: var(--accent); font-weight: 700; }
+
+    /* Footer & Home Button */
+    footer {
+      margin-top: 100px; padding-top: 40px; border-top: 1px solid var(--border-soft);
+      text-align: center; color: var(--text-muted); font-size: 14px;
+    }
+    .brand { font-weight: 700; font-size: 16px; color: var(--accent); letter-spacing: 0.05em; }
+
+    .home-button {
+      position: fixed; top: 24px; left: 24px; z-index: 999;
+      display: flex; align-items: center; justify-content: center;
+      width: 48px; height: 48px; border-radius: 50%;
+      background: rgba(15, 31, 53, 0.9); border: 1px solid var(--border-bright);
+      color: var(--text-muted); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(12px); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+    .home-button:hover {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+      color: var(--bg-main); border-color: var(--accent); transform: translateY(-2px);
+      box-shadow: 0 0 24px var(--accent-glow);
+    }
+    .home-button svg { width: 22px; height: 22px; stroke-width: 2.5; }
+
+    /* Mobile */
+    @media (max-width: 860px) {
+      .page { padding: 40px 20px 60px; }
+      header { margin-top: 40px; }
+      .hero-logo { width: 100px; } /* Smaller logo on mobile */
+      .home-button { top: 16px; left: 16px; width: 42px; height: 42px; }
+      .home-button svg { width: 18px; height: 18px; }
+      h1 { font-size: 32px; }
+      table { display: block; overflow-x: auto; }
+      th, td { padding: 12px 14px; white-space: nowrap; }
+    }
+    
+    html { scroll-behavior: smooth; }
+    ::selection { background: var(--accent); color: var(--bg-main); }
+  </style>
+</head>
+<body>
+
+  <a href="https://navimod.com/" class="home-button" aria-label="Ana Sayfa">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+      <polyline points="9 22 9 12 15 12 15 22"></polyline>
+    </svg>
+  </a>
+
+  <div class="page">
+    <header>
+      <img src="navimod-logo.png" alt="NaviMod" class="hero-logo">
+
+      <div class="logo-pill">
+        <span class="logo-dot"></span>
+        NaviMod Agentic Fund Framework
+      </div>
+      <h1>Agentic Multi-Layer Trading Architecture</h1>
+      <div class="subtitle">Autonomous AI-Driven Trading System Design</div>
+      <div class="hero-meta">Version 2.0 · November 2025</div>
+    </header>
+
+    <nav>
+      <a href="#intro" class="active">Introduction</a>
+      <a href="#blueprint">Architecture Blueprint</a>
+      <a href="#katmanlar">Layers</a>
+      <a href="#ajan-rolleri">Agent Roles</a>
+      <a href="#karsilastirma">Comparison</a>
+      <a href="#avantaj">Advantages</a>
+    </nav>
+
+    <section id="intro">
+      <div class="section-kicker">1 · Introduction</div>
+      <h2>What is <span>Agentic</span> Trading Architecture?</h2>
+      <p>
+        The NaviMod Agentic Fund Framework goes beyond traditional algorithmic trading
+        approaches by offering an AI-Driven, multi-layered, autonomous architecture composed of <strong>specialized agents</strong>.
+        Instead of a single "large model", the architecture employs specialized agents—including LLM-powered reasoning agents—each responsible for a specific task.
+        Agents execute stages such as data collection, signal generation, risk management, portfolio
+        optimization, and order management in an <em>independent yet coordinated</em> manner.
+      </p>
+      <p>
+        This approach facilitates adaptation to rapid market changes, error isolation, and
+        continuous improvement. Acting as the "brain" of the system,
+        the <strong>Management & Orchestration Layer</strong> synchronizes all agents
+        and continuously monitors performance.
+      </p>
+
+      <div class="flow-strip">
+        <span>Data</span>
+        <span class="flow-arrow">→</span>
+        <span>Alpha</span>
+        <span class="flow-arrow">→</span>
+        <span>AI Prediction</span>
+        <span class="flow-arrow">→</span>
+        <span>Risk</span>
+        <span class="flow-arrow">→</span>
+        <span>Portfolio</span>
+        <span class="flow-arrow">→</span>
+        <span>Execution</span>
+      </div>
+    </section>
+
+    <section id="blueprint">
+      <div class="section-kicker">2 · Architecture Blueprint</div>
+      <h2><span>Six-Layer</span> System Overview</h2>
+      <p>
+        The diagram below shows how the system is organized from data acquisition to order execution.
+        Each layer takes the output from the previous layer, processes it, and passes it to the next layer.
+      </p>
+
+      <div class="grid grid-3">
+        <article class="card c1">
+          <div class="card-tag">Layer 0</div>
+          <h3>Management & Orchestration</h3>
+          <p class="muted">
+            Central coordinator of the system; schedules all agents, manages memory,
+            and monitors models.
+          </p>
+        </article>
+
+        <article class="card c2">
+          <div class="card-tag">Layer 1</div>
+          <h3>Data & Alpha Factory</h3>
+          <p class="muted">
+            Raw data collection, cleaning, enrichment, and dynamic feature
+            generation.
+          </p>
+        </article>
+
+        <article class="card c3">
+          <div class="card-tag">Layer 2</div>
+          <h3>AI-Based Strategic Prediction</h3>
+          <p class="muted">
+            Market direction (regime) prediction and stock-based return/direction forecasts with AI & ML models.
+          </p>
+        </article>
+
+        <article class="card c4">
+          <div class="card-tag">Layer 3</div>
+          <h3>Risk & Selection</h3>
+          <p class="muted">
+            Filters risks of predicted stocks and selects suitable candidates.
+          </p>
+        </article>
+
+        <article class="card c5">
+          <div class="card-tag">Layer 4</div>
+          <h3>Portfolio & Strategy</h3>
+          <p class="muted">
+            Long/short balance, inter-strategy weighting, and net
+            exposure adjustment.
+          </p>
+        </article>
+
+        <article class="card c6">
+          <div class="card-tag">Layer 5</div>
+          <h3>Execution & Market Interaction</h3>
+          <p class="muted">
+            Order type, microstructure management, broker communication, and slippage
+            minimization.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="katmanlar">
+      <div class="section-kicker">3 · Layer Details</div>
+      <h2><span>Each Layer's</span> Roles and Responsibilities</h2>
+
+      <div class="grid grid-2">
+        <article class="card c1">
+          <div class="card-tag">Layer 0</div>
+          <h3>Management & Orchestration Layer</h3>
+          <p class="muted">
+            The brain of the system; coordinates all agents, manages scheduling and memory.
+          </p>
+          <ul>
+            <li>Plans and triggers which agents run when.</li>
+            <li>Switches modes (bull/bear/neutral) based on market regimes.</li>
+            <li>Monitors model performance and detects concept drift.</li>
+            <li>Stores regime information, performance metrics, and historical
+              feature behaviors in system memory.</li>
+          </ul>
+        </article>
+
+        <article class="card c2">
+          <div class="card-tag">Layer 1</div>
+          <h3>Data & Alpha Factory Layer</h3>
+          <p class="muted">
+            Collects, cleans, enriches data, and generates dynamic alpha factors.
+          </p>
+          <ul>
+            <li>Combines price, volume, fundamental analysis, macro, and alternative data sources.</li>
+            <li><strong>Feature Generation Agent:</strong> Generates thousands of features (technical, fundamental, sentiment, macro) using LLM-based reasoning.</li>
+            <li><strong>Feature Selection Agent:</strong> Selects which feature set to use based on regime.</li>
+            <li>Detects and flags low-quality data via Data Quality agent.</li>
+          </ul>
+        </article>
+
+        <article class="card c3">
+          <div class="card-tag">Layer 2</div>
+          <h3>AI-Based Strategic Prediction Layer</h3>
+          <p class="muted">
+            Predicts overall market direction and individual stock movements with AI & ML models.
+          </p>
+          <ul>
+            <li><strong>Market Compass Agent:</strong> Detects market regime (Bull/Bear/Neutral),
+              adapting the entire system's behavior accordingly.</li>
+            <li><strong>Single Stock Agent:</strong> Forecasts future returns
+              and direction (long/short) for each stock.</li>
+            <li>Output: Expected return forecast and direction signal for each stock.</li>
+          </ul>
+        </article>
+
+        <article class="card c4">
+          <div class="card-tag">Layer 3</div>
+          <h3>Risk & Selection Layer</h3>
+          <p class="muted">
+            Filters risky stocks from predictions and creates candidate pool for portfolio.
+          </p>
+          <ul>
+            <li>Evaluates criteria like volatility, liquidity, correlation, model uncertainty (confidence) and sentiment scores through LLM-based reasoning.</li>
+            <li><strong>Risk Management Agent:</strong> Filters stocks based on risk level.</li>
+            <li>Output: "Clean" candidate list entering portfolio optimization.</li>
+          </ul>
+        </article>
+
+        <article class="card c5">
+          <div class="card-tag">Layer 4</div>
+          <h3>Portfolio & Strategy Layer</h3>
+          <p class="muted">
+            Determines fund's long/short balance and weight distribution across strategies.
+          </p>
+          <ul>
+            <li><strong>Portfolio Agent (Optimizer):</strong> Calculates weights using mean-variance, Black-Litterman, or RL-based models.</li>
+            <li>Adjusts net exposure level (long/short ratio) based on regime signal.</li>
+            <li>Combines different strategies into a single basket.</li>
+            <li>Output: Target position size and direction for each stock.</li>
+          </ul>
+        </article>
+
+        <article class="card c6">
+          <div class="card-tag">Layer 5</div>
+          <h3>Execution & Market Interaction Layer</h3>
+          <p class="muted">
+            Converts portfolio decisions into real market orders; manages microstructure.
+          </p>
+          <ul>
+            <li><strong>Execution Agent:</strong> Selects order type and submission speed (limit / market / TWAP / VWAP).</li>
+            <li>Slices orders based on liquidity, chooses routes and exchanges.</li>
+            <li>Estimates and monitors transaction costs and slippage.</li>
+            <li>Communicates securely and trackably with broker APIs.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="ajan-rolleri">
+      <div class="section-kicker">4 · Agent Roles</div>
+      <h2><span>Specialized Agents'</span> Layer Relationships</h2>
+      <p>
+        These layers are managed by specific "Agents" that make autonomous decisions.
+        Each agent has a clear place in this architecture:
+      </p>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>Specific Agent Role</th>
+            <th>Related Architecture Layer</th>
+            <th>Main Task</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Feature Generation Agent</strong></td>
+            <td>Data & Alpha Factory Layer</td>
+            <td>Derive thousands of new and creative 'alpha' factors from raw data.</td>
+          </tr>
+          <tr>
+            <td><strong>Feature Selection Agent</strong></td>
+            <td>Data & Alpha Factory Layer</td>
+            <td>Select informative, noise-free features.</td>
+          </tr>
+          <tr>
+            <td><strong>Market Compass Agent</strong></td>
+            <td>AI-Based Strategic Prediction Layer</td>
+            <td>Determine overall market direction (Bull/Bear/Neutral).</td>
+          </tr>
+          <tr>
+            <td><strong>Single Stock Agent</strong></td>
+            <td>Strategic Prediction Layer</td>
+            <td>Predict individual stocks' direction and return potential.</td>
+          </tr>
+          <tr>
+            <td><strong>Risk Management Agent</strong></td>
+            <td>Risk & Selection Layer</td>
+            <td>Filter stock and market risks to create candidate pool.</td>
+          </tr>
+          <tr>
+            <td><strong>Portfolio Agent (Optimizer)</strong></td>
+            <td>Portfolio & Strategy Layer</td>
+            <td>Optimize weight allocation to selected stocks.</td>
+          </tr>
+          <tr>
+            <td><strong>Execution Agent</strong></td>
+            <td>Execution & Interaction Layer</td>
+            <td>Execute orders in the market with minimal impact (slippage).</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="karsilastirma">
+      <div class="section-kicker">6 · Comparison with Traditional Approach</div>
+      <h2><span>Traditional</span> Algo-Trading Systems vs <span>Agentic</span> Architecture</h2>
+      <p>
+        The table below compares the classic single-model approach with the agentic, multi-layered
+        structure.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Criterion</th>
+            <th>Traditional Algo-Trading</th>
+            <th>Agentic Multi-Layer Architecture</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Architecture</strong></td>
+            <td>Single model, monolithic system.</td>
+            <td>Multi-layered, flexible structure divided into specialized agents.</td>
+          </tr>
+          <tr>
+            <td><strong>Data & Signals</strong></td>
+            <td>Fixed indicator set, limited feature generation.</td>
+            <td>Dynamic feature generation, regime-based signal set (Alpha Factory).</td>
+          </tr>
+          <tr>
+            <td><strong>Risk Management</strong></td>
+            <td>Fixed stop/limits, risk added at end of process.</td>
+            <td>Embedded in decision process, proactive risk filter (Risk Layer).</td>
+          </tr>
+          <tr>
+            <td><strong>Regime Adaptation</strong></td>
+            <td>Usually absent or dependent on manual intervention.</td>
+            <td>Automatic bull/bear/neutral mode adjustment via Market Compass Agent (Prediction Layer).</td>
+          </tr>
+          <tr>
+            <td><strong>Model Management</strong></td>
+            <td>Manual retraining and changes, limited monitoring.</td>
+            <td>Continuous performance monitoring and autonomous coordination (Management Layer).</td>
+          </tr>
+          <tr>
+            <td><strong>Portfolio & Strategy</strong></td>
+            <td>Fixed weights or simple optimization.</td>
+            <td>Regime-adaptive long/short balance optimization (Portfolio Layer).</td>
+          </tr>
+          <tr>
+            <td><strong>Fault Tolerance</strong></td>
+            <td>Single model failure directly impacts fund performance.</td>
+            <td>Agent-based isolation; failure can remain in single layer.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="avantaj">
+      <div class="section-kicker">7 · Key Strengths</div>
+      <h2><span>Advantages</span></h2>
+      <div class="grid grid-2" style="margin-top:10px;">
+        <article class="card">
+          <h3>Modularity & Flexibility</h3>
+          <p>
+            Each agent is responsible for a single task. Development, testing, and
+            deployment processes can proceed independently.
+          </p>
+          <div class="pill-list">
+            <span class="pill">Fault isolation</span>
+            <span class="pill">Easy versioning</span>
+            <span class="pill">Step-by-step expansion</span>
+          </div>
+        </article>
+        <article class="card">
+          <h3>Regime-Sensitive Decision Making</h3>
+          <p>
+            Thanks to the Compass agent, the system doesn't apply "same strategy in all weather";
+            it selects appropriate net exposure and strategy mode based on regime.
+          </p>
+          <div class="pill-list">
+            <span class="pill">Bull / Bear / Neutral</span>
+            <span class="pill">Net exposure control</span>
+            <span class="pill">Dynamic adaptation</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:20px;">
+        <article class="card">
+          <h3>Risk-First Approach</h3>
+          <p>
+            Risk isn't just managed with stop-loss at the end; it's embedded in the selection process.
+            Risky stocks are eliminated before entering portfolio calculations.
+          </p>
+          <div class="pill-list">
+            <span class="pill">Proactive risk</span>
+            <span class="pill">Quality candidate pool</span>
+            <span class="pill">Continuous monitoring</span>
+          </div>
+        </article>
+        <article class="card">
+          <h3>Continuous Learning & Memory</h3>
+          <p>
+            Model governance and memory layer record regimes, performance metrics,
+            and feature behaviors, enabling the system to mature over time.
+          </p>
+          <div class="pill-list">
+            <span class="pill">Concept drift tracking</span>
+            <span class="pill">Data-driven improvement</span>
+            <span class="pill">Autonomous evolution</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <footer>
+      <span class="brand">NaviMod · Agentic Fund Framework</span>
+    </footer>
+  </div>
+</body>
+</html>
